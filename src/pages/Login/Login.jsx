@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
-
     const {signIn} = useAuth()
+    const navigate = useNavigate()
 
     const handleLogin = event => {
         event.preventDefault();
@@ -16,6 +16,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate('/')
             })
             .catch(error => console.log(error));
     }

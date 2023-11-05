@@ -33,8 +33,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        const userEmail = currentUser?.email || user?.email;
-        const loggedUser = { email: userEmail };
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
 
       setUser(currentUser);
       console.log("current user", currentUser);
@@ -42,20 +42,28 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", loggedUser, {
-            withCredentials: true,
-          })
+          .post(
+            "https://car-doctor-server-main-chi.vercel.app/jwt",
+            loggedUser,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
             console.log("token response", res.data);
           });
-      }
-      else{
-        axios.post('http://localhost:5000/logout', loggedUser, {
-            withCredentials: true
-        })
-        .then(res =>{
+      } else {
+        axios
+          .post(
+            "https://car-doctor-server-main-chi.vercel.app/logout",
+            loggedUser,
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
             console.log(res.data);
-        })
+          });
       }
     });
     return () => {
